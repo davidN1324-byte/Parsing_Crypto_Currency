@@ -60,3 +60,5 @@ with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
     # Записываем данные с временной меткой
     for index, coin in enumerate(coins_sorted[:10], start=1):
         writer.writerow([timestamp, index, coin[1], coin[0], coin[2]])
+
+print(f"Данные сохранены в '{csv_filename}' с историей.")
