@@ -1,51 +1,45 @@
 name: Parse Crypto Data
 
-#Triggers for executing a workflow
+# Triggers for executing the workflow
 on:
   schedule:
     # Run every hour
     - cron: '0 * * * *'
   push:
     branches:
-      - master  # Run on every push to the main branch
-  workflow_dispatch:
+      - master  # Run on every push to the master branch
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   update-data:
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu for execution
 
     steps:
-      # Step 1: Clone the repository
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Configure the user for Git
-      - name: Set Git user name and email
-        run: |
-          git config --global user.name "David Nikishov"
-          git config --global user.email "davidnikishov1324@gmail.com"
-
-      # Step 3: Install Python
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.x'
 
-      # Step 4: Install dependencies
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # Step 5: Run data scraping
+      # Step 4: Run the data scraping script
       - name: Run parsing script
         run: |
           python main.py
 
-      # Step 6: Save the results to the repository
+      # Step 5: Commit and push the updated data to the repository
       - name: Commit and push updated data
         run: |
           git add cryptocurrencies_history.csv
           git commit -m "Update crypto data" || echo "No changes to commit"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Using a token for authentication
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the Personal Access Token (PAT) for authentication
