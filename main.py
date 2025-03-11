@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import random
+import csv
 
 # Считываем все User-Agent из файла
 with open("user_agents.txt", "r") as file:
@@ -37,6 +38,13 @@ for code_tag, name_tag, price_tag in zip(
 # Сортируем валюты по цене (по убыванию)
 coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
-# Выводим топ-10 самых дорогих валют с порядковым номером
-for index, coin in enumerate(coins_sorted[:10], start=1):
-    print(f"{index}. {coin[1]} ({coin[0]}): ${coin[2]}")
+# Записываем данные в CSV файл
+with open("cryptocurrencies.csv", mode="w", newline="", encoding="utf-8") as file:
+    writer = csv.writer(file)
+    # Записываем заголовок
+    writer.writerow(["№", "Полное название", "Аббревиатура", "Цена ($)"])
+    # Записываем данные
+    for index, coin in enumerate(coins_sorted[:10], start=1):
+        writer.writerow([index, coin[1], coin[0], coin[2]])
+
+print("Данные успешно сохранены в файл 'cryptocurrencies.csv'")
