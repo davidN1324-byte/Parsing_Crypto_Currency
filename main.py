@@ -1,9 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import random
+
+# Считываем все User-Agent из файла
+with open("user_agents.txt", "r") as file:
+    user_agents = file.readlines()
+
+# Выбираем случайный User-Agent
+user_agent = random.choice(user_agents).strip()  # Берем одну строку из списка и удаляем лишние пробелы и символы новой строки
+
+# Заголовки для запроса
+headers = {
+    "User-Agent": user_agent
+}
 
 url = "https://finance.ua/ua/crypto"
-response = requests.get(url)
+response = requests.get(url, headers=headers)
 
 soup = BeautifulSoup(response.text, "html.parser")
 
