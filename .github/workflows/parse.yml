@@ -7,7 +7,7 @@ on:
     - cron: '0 * * * *'
   push:
     branches:
-      - master  # Запускать при каждом пуше в ветку main
+      - master  # Запускать при каждом пуше в ветку master
 
 jobs:
   update-data:
@@ -37,7 +37,7 @@ jobs:
       # Шаг 5: Сохраняем результаты в репозиторий
       - name: Commit and push updated data
         run: |
-          git add cryptocurrencies_history.csv  # Путь к вашему CSV
+          git add cryptocurrencies_history.csv  # Путь к CSV
           git commit -m "Update crypto data" || echo "No changes to commit"
           git push
         env:
