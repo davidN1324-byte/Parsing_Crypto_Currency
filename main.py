@@ -26,6 +26,9 @@ response = requests.get(url, headers=headers)
 
 soup = BeautifulSoup(response.text, "html.parser")
 
+# Текущая дата и время
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 coins = []
 for code_tag, name_tag, price_tag in zip(
         soup.find_all("p", class_="CoinsListstyles__Code-sc-1c8245s-24 lgioIM"),
@@ -36,20 +39,12 @@ for code_tag, name_tag, price_tag in zip(
     name = name_tag.get_text(strip=True)
     price_text = price_tag.get_text(strip=True)
     
-    # Преобразуем цену в число (удаляем символы '$' и пробелы)
-    price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))  # Если разделители — запятые, заменяем их на точку
+    # Преобразуем цену в число
+    price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))
     coins.append((code, name, price))
 
-# Сортируем валюты по цене (по убыванию)
+# Сортируем по убыванию цены
 coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
-# Записываем данные в CSV файл
-with open("cryptocurrencies.csv", mode="w", newline="", encoding="utf-8") as file:
-    writer = csv.writer(file)
-    # Записываем заголовок
-    writer.writerow(["№", "Полное название", "Аббревиатура", "Цена ($)"])
-    # Записываем данные
-    for index, coin in enumerate(coins_sorted[:10], start=1):
-        writer.writerow([index, coin[1], coin[0], coin[2]])
-
-print("Данные успешно сохранены в файл 'cryptocurrencies.csv'")
+# Проверяем, существует ли файл и пуст ли он
+file_exists = os.path.isfile(csv_filename) and os.path.getsize(csv_filename) > 0
