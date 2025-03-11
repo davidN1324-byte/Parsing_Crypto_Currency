@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+re
+random
+csv
+os
+datetime
