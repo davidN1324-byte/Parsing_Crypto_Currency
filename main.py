@@ -20,3 +20,10 @@ for code_tag, name_tag, price_tag in zip(
     # Преобразуем цену в число (удаляем символы '$' и пробелы)
     price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))  # Если разделители — запятые, заменяем их на точку
     coins.append((code, name, price))
+
+# Сортируем валюты по цене (по убыванию)
+coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
+
+# Выводим топ-10 самых дорогих валют с порядковым номером
+for index, coin in enumerate(coins_sorted[:10], start=1):
+    print(f"{index}. {coin[1]} ({coin[0]}): ${coin[2]}")
