@@ -38,6 +38,9 @@ jobs:
       # Step 5: Commit and push the updated data to the repository
       - name: Commit and push updated data
         run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          
           git add cryptocurrencies_history.csv
           git commit -m "Update crypto data" || echo "No changes to commit"
           git push
