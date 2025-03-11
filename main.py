@@ -55,7 +55,7 @@ with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
 
     # Если файл только создается — пишем заголовок
     if not file_exists:
-        writer.writerow(["Дата и время", "№", "Полное название", "Аббревиатура", "Цена ($)"])
+        writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price  ($)"])
 
     # Записываем данные с временной меткой
     for index, coin in enumerate(coins_sorted[:10], start=1):
