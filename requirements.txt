@@ -1,6 +1,4 @@
 requests
 beautifulsoup4
-os
-datetime
 pandas
 matplotlib
