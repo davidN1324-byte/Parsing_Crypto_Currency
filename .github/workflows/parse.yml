@@ -1,44 +1,50 @@
-name: Parse Crypto
+name: Parse Crypto Data
 
-# Триггеры для выполнения workflow
+#Triggers for executing a workflow
 on:
   schedule:
-    # Запускать каждый час
+    # Run every hour
     - cron: '0 * * * *'
   push:
     branches:
-      - master  # Запускать при каждом пуше в ветку master
+      - main  # Run on every push to the main branch
 
 jobs:
   update-data:
-    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu для выполнения
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu for execution
 
     steps:
-      # Шаг 1: Клонируем репозиторий
+      # Step 1: Clone the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Шаг 2: Устанавливаем Python
+      # Step 2: Configure the user for Git
+      - name: Set Git user name and email
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      # Step 3: Install Python
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.x'
 
-      # Шаг 3: Устанавливаем зависимости
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # Шаг 4: Запускаем парсинг данных
+      # Step 5: Run data scraping
       - name: Run parsing script
         run: |
-          python main.py  # Путь к парсеру
+          python main.py  # Укажите путь к вашему парсингу
 
-      # Шаг 5: Сохраняем результаты в репозиторий
+      # Step 6: Save the results to the repository
       - name: Commit and push updated data
         run: |
-          git add cryptocurrencies_history.csv  # Путь к CSV
+          git add cryptocurrencies_history.csv  # Путь к вашему CSV
           git commit -m "Update crypto data" || echo "No changes to commit"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Использование токена для аутентификации
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Using a token for authentication
