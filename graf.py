@@ -5,20 +5,20 @@ import matplotlib.pyplot as plt
 df = pd.read_csv("cryptocurrencies_history.csv")
 
 # Преобразуем столбец с датой в формат datetime
-df['Дата и время'] = pd.to_datetime(df['Дата и время'])
+df['Date and Time'] = pd.to_datetime(df['Date and Time'])
 
 # Группируем по дате и криптовалюте
-df_grouped = df[['Дата и время', 'Аббревиатура', 'Цена ($)']].groupby(['Дата и время', 'Аббревиатура']).last().reset_index()
+df_grouped = df[['Date and Time', 'Abbreviation', 'Цена ($)']].groupby(['Date and Time', 'Abbreviation']).last().reset_index()
 
 # Строим график
 plt.figure(figsize=(10, 6))
 
-for coin in df_grouped['Аббревиатура'].unique():
-    coin_data = df_grouped[df_grouped['Аббревиатура'] == coin]
-    plt.plot(coin_data['Дата и время'], coin_data['Цена ($)'], label=coin)
+for coin in df_grouped['Abbreviation'].unique():
+    coin_data = df_grouped[df_grouped['Abbreviation'] == coin]
+    plt.plot(coin_data['Date and Time'], coin_data['Цена ($)'], label=coin)
 
 plt.title("Изменение цены криптовалют")
-plt.xlabel("Дата и время")
+plt.xlabel("Date and Time")
 plt.ylabel("Цена ($)")
 plt.legend()
 plt.xticks(rotation=45)
