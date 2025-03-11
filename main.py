@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 import re
 import random
 import csv
+import os
+from datetime import datetime
+
+# Файл для сохранения истории
+csv_filename = "cryptocurrencies_history.csv"
 
 # Считываем все User-Agent из файла
 with open("user_agents.txt", "r") as file:
