@@ -7,7 +7,8 @@ on:
     - cron: '0 * * * *'
   push:
     branches:
-      - main  # Run on every push to the main branch
+      - master  # Run on every push to the main branch
+  workflow_dispatch:
 
 jobs:
   update-data:
