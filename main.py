@@ -48,3 +48,15 @@ coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
 # Проверяем, существует ли файл и пуст ли он
 file_exists = os.path.isfile(csv_filename) and os.path.getsize(csv_filename) > 0
+
+# Открываем файл в режиме добавления (append)
+with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
+    writer = csv.writer(file)
+
+    # Если файл только создается — пишем заголовок
+    if not file_exists:
+        writer.writerow(["Дата и время", "№", "Полное название", "Аббревиатура", "Цена ($)"])
+
+    # Записываем данные с временной меткой
+    for index, coin in enumerate(coins_sorted[:10], start=1):
+        writer.writerow([timestamp, index, coin[1], coin[0], coin[2]])
