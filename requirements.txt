@@ -1,6 +1,5 @@
 requests
 beautifulsoup4
-random
 csv
 os
 datetime
