@@ -7,7 +7,7 @@ on:
     - cron: '0 * * * *'
   push:
     branches:
-      - main  # Запускать при каждом пуше в ветку main
+      - master  # Запускать при каждом пуше в ветку main
 
 jobs:
   update-data:
