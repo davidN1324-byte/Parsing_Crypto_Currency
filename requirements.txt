@@ -5,3 +5,5 @@ random
 csv
 os
 datetime
+pandas
+matplotlib
