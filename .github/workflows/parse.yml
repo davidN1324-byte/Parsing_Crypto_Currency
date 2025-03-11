@@ -38,12 +38,12 @@ jobs:
       # Step 5: Run data scraping
       - name: Run parsing script
         run: |
-          python main.py  # Укажите путь к вашему парсингу
+          python main.py
 
       # Step 6: Save the results to the repository
       - name: Commit and push updated data
         run: |
-          git add cryptocurrencies_history.csv  # Путь к вашему CSV
+          git add cryptocurrencies_history.csv
           git commit -m "Update crypto data" || echo "No changes to commit"
           git push
         env:
