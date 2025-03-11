@@ -13,6 +13,8 @@ on:
 jobs:
   update-data:
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu for execution
+    permissions:
+      contents: write
 
     steps:
       # Step 1: Checkout the repository
