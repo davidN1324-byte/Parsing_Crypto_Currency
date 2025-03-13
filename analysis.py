@@ -1,6 +1,10 @@
-def perform_analysis():
-    # Temporarily displaying a placeholder.
-    return "Analysis is not yet available. Please check."
+def analyze():
+    # emporarily displaying a placeholder.
+    result = "Analysis is not yet available. Please check."
+    
+    # Writing the analysis to a file.
+    with open("analysis.txt", "w") as file:
+        file.write(result)
 
-if __name__ == "__main__":
-    print(perform_analysis())
+#Starting the analysis.
+analyze()
