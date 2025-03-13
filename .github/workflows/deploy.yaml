@@ -25,8 +25,8 @@ jobs:
 
     - name: Generate graph and analysis
       run: |
-        python generate_graph.py  # Run the script to generate the graph
-        python generate_analysis.py  # Run the script to generate the analysis
+        python graph.py  # Run the script to generate the graph
+        python analysis.py  # Run the script to generate the analysis
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4  # Action to deploy to GitHub Pages
