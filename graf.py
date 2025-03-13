@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-# # Reading data from CSV
+# Reading data from CSV
 df = pd.read_csv("cryptocurrencies_history.csv")
 
 # We will convert the date column to the `datetime` format.
@@ -35,5 +35,6 @@ fig.update_layout(
     hovermode="closest"  # Interactive mode.
 )
 
-# We display the chart.
-fig.show()
+# Save the chart as an HTML file
+fig.write_html("crypto_chart.html")
+print("Chart saved in crypto_chart.html")
