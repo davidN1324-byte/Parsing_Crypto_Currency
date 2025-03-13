@@ -2,8 +2,11 @@ name: Deploy Site GH Pages
 
 on:
   push:
-    branches: ["master"]
-  workflow_dispatch:
+    branches:
+      - master
+  schedule:
+    - cron: '*/30 * * * *' # Runs every 30 minutes
+  workflow_dispatch:  # Manually trigger
 
 jobs:
   build:
@@ -29,23 +32,9 @@ jobs:
       - name: Run analysis.py
         run: python analysis.py
 
-      - name: Create docs folder
-        run: mkdir -p docs
-
-      - name: Copy static files to docs folder
-        run: |
-          cp -r static/* docs/
-          cp templates/index.html docs/
-
-      - name: Copy generated files to docs folder
-        run: |
-          cp crypto_chart.html docs/
-          cp analysis.txt docs/
-        
       - name: List files in docs folder
-        run: |
-          ls -l docs/
-          
+        run: ls -l docs/
+
       - name: Publish to GitHub Pages
         run: |
           git config --global user.name "github-actions"
