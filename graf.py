@@ -36,5 +36,5 @@ fig.update_layout(
 )
 
 # Save the chart as an HTML file
-fig.write_html("crypto_chart.html")
-print("Chart saved in crypto_chart.html")
+fig.write_html("docs/crypto_chart.html")
+print("Chart saved in docs/crypto_chart.html")
