@@ -51,18 +51,10 @@ jobs:
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Committing and pushing generated files
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
-          git add crypto_chart.html analysis.txt
-          git commit -m "Add generated chart and analysis"
-          git push
-
-      - name: Uploading the artifact for GitHub Pages
+      - name: 🚀 Uploading the artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
       - name: 🌍 Publishing to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
