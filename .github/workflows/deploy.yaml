@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
+    - cron: '0 * * * *'  # Run once an hour
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual execution
+  workflow_dispatch:  # Manual trigger option
 
 permissions:
   contents: read
@@ -18,40 +18,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clone repository
+      - name: 📥 Clone the repository
         uses: actions/checkout@v4
 
       - name: 🔧 Install dependencies
         run: |
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "⚠️ requirements.txt not found!"
-            exit 1
-          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "⚠️ requirements.txt not found!"; exit 1; fi
 
       - name: 📊 Generate chart and analysis
         run: |
-          python analysis.py  # Generates `crypto_chart.html` and `analysis.txt`
-          python graph.py     # Ensures the chart is created
-
-      - name: 📂 Debug: List all files before publishing
-        run: ls -R
+          python graf.py   # Generates crypto_chart.html
+          python analysis.py  # Generates analysis.txt
 
       - name: 📂 Prepare files for publication
         run: |
           mkdir -p public
-          [ -f templates/index.html ] && cp templates/index.html public/index.html
-          [ -f static/styles.css ] && cp static/styles.css public/
-          [ -f static/script.js ] && cp static/script.js public/
-          [ -f static/icon/favicon.ico ] && cp static/icon/favicon.ico public/
-          [ -f crypto_chart.html ] && cp crypto_chart.html public/
-          [ -f analysis.txt ] && cp analysis.txt public/
+          cp templates/index.html public/index.html
+          cp static/styles.css public/
+          cp static/script.js public/
+          cp static/icon/favicon.ico public/  # Copy favicon.ico
+          cp crypto_chart.html public/
+          cp analysis.txt public/
 
       - name: 🚀 Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
       - name: 🌍 Deploy to GitHub Pages
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v2
