@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run every hour
+    - cron: '0 * * * *'  # Run once an hour.
   push:
     branches:
-      - master  # Run on push to the master branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+      - master
+  workflow_dispatch:  # Option for manual execution.
 
 permissions:
   contents: read
@@ -15,21 +15,31 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Cloning the repository
-        uses: actions/checkout@v4  # Checkout the repository
+        uses: actions/checkout@v3
 
-      - name: 🔧 Installing dependencies
+      - name: 🔧 Setting up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Installing dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Install dependencies from requirements.txt
+          pip install -r requirements.txt
 
       - name: 📊 Running analysis and generating chart
         run: |
-          python analysis.py  # Run analysis.py to generate data
-          python graf.py  # Generate the chart
+          python analysis.py
+          python graf.py
+
+      - name: 🧐 Check file generation
+        run: |
+          ls -l
+          ls -l crypto_chart.html
+          ls -l analysis.txt
 
       - name: 📂 Preparing files for publication
         run: |
@@ -38,13 +48,21 @@ jobs:
           cp static/styles.css public/
           cp static/script.js public/
           cp static/icon/favicon.ico public/
-          cp crypto_chart.html public/  # Make sure the generated chart is copied
-          cp analysis.txt public/  # Copy the analysis file
+          cp crypto_chart.html public/
+          cp analysis.txt public/
 
-      - name: 🚀 Uploading the artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: 🚀 Committing and pushing generated files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add crypto_chart.html analysis.txt
+          git commit -m "Add generated chart and analysis"
+          git push
+
+      - name: Uploading the artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./public
 
-      - name: 🌍 Publishing on GitHub Pages
-        uses: actions/deploy-pages@v3
+      - name: 🌍 Publishing to GitHub Pages
+        uses: actions/deploy-pages@v2
