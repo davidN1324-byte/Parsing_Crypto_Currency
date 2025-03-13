@@ -41,7 +41,11 @@ jobs:
         run: |
           cp crypto_chart.html docs/
           cp analysis.txt docs/
-
+        
+      - name: List files in docs folder
+        run: |
+          ls -l docs/
+          
       - name: Publish to GitHub Pages
         run: |
           git config --global user.name "github-actions"
