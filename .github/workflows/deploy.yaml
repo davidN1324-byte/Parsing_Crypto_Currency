@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Running once an hour.
+    - cron: '0 * * * *'  # Run once an hour.
   push:
     branches:
       - master
@@ -18,17 +18,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Cloning the repository.
-        uses: actions/checkout@v4
+      - name: 📥 Cloning the repository
+        uses: actions/checkout@v3
 
-      - name: 🔧 Installing dependencies.
+      - name: 🔧 Setting up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Installing dependencies
         run: |
           pip install -r requirements.txt
 
-      - name: 📊 Generating the chart and analysis.
+      - name: 📊 Running analysis and generating chart
         run: |
-          python analysis.py  # This script generates crypto_chart.html and analysis.txt
-          python graf.py  # Make sure the graph is generated as well
+          python analysis.py
+          python graf.py
+
+      - name: 🧐 Check file generation
+        run: |
+          ls -l
+          ls -l crypto_chart.html
+          ls -l analysis.txt
 
       - name: 📂 Preparing files for publication
         run: |
@@ -36,14 +47,15 @@ jobs:
           cp templates/index.html public/index.html
           cp static/styles.css public/
           cp static/script.js public/
-          cp static/icon/favicon.ico public/  # Include favicon.ico
+          cp static/icon/favicon.ico public/
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Uploading the artifact for GitHub Pages.
-        uses: actions/upload-pages-artifact@v4
+      - name: 🚀 Uploading the artifact for GitHub Pages
+        uses: actions/upload-artifact@v3
         with:
+          name: page-files
           path: ./public
 
-      - name: 🌍 Publishing on GitHub Pages.
+      - name: 🌍 Publishing to GitHub Pages
         uses: actions/deploy-pages@v4
