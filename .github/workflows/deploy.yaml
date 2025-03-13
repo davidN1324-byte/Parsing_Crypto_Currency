@@ -1,46 +1,53 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
-    branches:
-      - master
-  workflow_dispatch:  # Allows manual execution
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches: ["master"]
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Cloning the repository.
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🔧 Installing dependencies.
-        run: pip install -r requirements.txt
-
-      - name: 📊 Generating the chart and analysis.
-        run: python analysis.py 
-      
-      - name: 📊 Generating the chart and analysis.
-        run: python graf.py #This script will create `crypto_graph.html` and `analysis.txt`
-
-      - name: 📂 Preparing files for publication
-        run: |
-          mkdir -p public
-          cp templates/index.html public/index.html
-          cp static/styles.css public/
-          cp static/script.js public/
-          cp crypto_graph.html public/
-          cp analysis.txt public/
-
-      - name: 🚀 Uploading the artifact for GitHub Pages.
-        uses: actions/upload-pages-artifact@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          path: ./public
+          python-version: '3.9'
 
-      - name: 🌍 Publishing on GitHub Pages.
-        uses: actions/deploy-pages@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run graf.py
+        run: python graf.py
+
+      - name: Run analysis.py
+        run: python analysis.py
+
+      - name: Copy static files to docs folder
+        run: |
+          cp static/steles.css docs/
+          cp static/icon/favicon.ico docs/
+          cp static/script.js docs/
+
+      - name: Copy templates files to docs folder
+        run: |
+          cp templates/index.html docs/
+
+      - name: Copy generated files to docs folder
+        run: |
+          cp crypto_chart.html docs/
+          cp analysis.txt docs/
+
+      - name: Publish to GitHub Pages
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add docs/
+          git commit -m "Update site content"
+          git push
