@@ -2,14 +2,14 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
+    - cron: '0 * * * *'  # Run every hour
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual execution
+  workflow_dispatch:  # Manual trigger
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,9 +29,6 @@ jobs:
           python graf.py
           python analysis.py
 
-      - name: 🔍 Check if files exist
-        run: ls -l crypto_chart.html analysis.txt
-
       - name: 📂 Prepare files for publication
         run: |
           mkdir -p public
@@ -42,10 +39,17 @@ jobs:
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: 📤 Commit generated files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add crypto_chart.html analysis.txt
+          git commit -m "Auto-update generated files" || echo "No changes to commit"
+          git push
+
+      - name: 🚀 Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: ./public
 
       - name: 🌍 Deploy to GitHub Pages
