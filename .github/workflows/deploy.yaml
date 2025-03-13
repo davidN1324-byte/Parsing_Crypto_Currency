@@ -29,14 +29,12 @@ jobs:
       - name: Run analysis.py
         run: python analysis.py
 
+      - name: Create docs folder
+        run: mkdir -p docs
+
       - name: Copy static files to docs folder
         run: |
-          cp static/steles.css docs/
-          cp static/icon/favicon.ico docs/
-          cp static/script.js docs/
-
-      - name: Copy templates files to docs folder
-        run: |
+          cp -r static/* docs/
           cp templates/index.html docs/
 
       - name: Copy generated files to docs folder
