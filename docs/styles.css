@@ -1,0 +1,152 @@
+/* **Main styles for the entire page** */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #3e8e41, #1d3b1a);
+    color: white;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* **Styles for headings***/
+.main-header {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-top: 20px;
+    animation: fadeIn 2s ease-out;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    margin-bottom: 10px;
+    animation: slideIn 1s ease-in-out;
+}
+
+.subheading {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.25rem;
+    opacity: 0.8;
+    animation: fadeIn 3s ease-out;
+}
+
+/* **Main styles for content** */
+main {
+    padding: 40px 20px;
+}
+
+h2, .section-title {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    animation: fadeIn 2s ease-out;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+.chart-section {
+    text-align: center;
+}
+
+.chart-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 2s ease-out;
+}
+
+.analysis-section {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 3s ease-out;
+}
+
+.analysis-content {
+    font-family: 'Open Sans', sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d3a3f;
+    color: white;
+    font-size: 1rem;
+    margin-top: 40px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* **Animations** */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* We add responsiveness for mobile devices. */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .main-header {
+        padding: 30px 15px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .chart-container, .analysis-section {
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 0.875rem;
+    }
+}
