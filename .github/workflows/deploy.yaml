@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour.
+    - cron: '0 * * * *'  # Runs every hour
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual execution.
+  workflow_dispatch:  # Allows manual execution
 
 permissions:
   contents: read
@@ -18,36 +18,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clone the repository.
+      - name: 📥 Clone repository
         uses: actions/checkout@v4
 
-      - name: 🔧 Install dependencies.
-        run: pip install -r requirements.txt  # Install dependencies from requirements.txt
-
-      - name: 📊 Generate the chart and analysis.
-        run: python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
-
-      - name: 📂 Verify generated files.
+      - name: 🔧 Install dependencies
         run: |
-          echo "Files in the repository:"
-          ls -alh
-          echo "Files in the public directory before publication:"
-          ls -alh ./public || echo "The public directory does not exist"
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "⚠️ requirements.txt not found!"
+            exit 1
+          fi
 
-      - name: 📂 Prepare files for publication.
+      - name: 📊 Generate chart and analysis
+        run: |
+          python analysis.py  # Generates `crypto_chart.html` and `analysis.txt`
+          python graph.py     # Ensures the chart is created
+
+      - name: 📂 Debug: List all files before publishing
+        run: ls -R
+
+      - name: 📂 Prepare files for publication
         run: |
           mkdir -p public
-          cp templates/index.html public/index.html
-          cp static/styles.css public/
-          cp static/script.js public/
-          cp static/icon/favicon.ico public/  # Copy favicon.ico
-          cp crypto_chart.html public/
-          cp analysis.txt public/
+          [ -f templates/index.html ] && cp templates/index.html public/index.html
+          [ -f static/styles.css ] && cp static/styles.css public/
+          [ -f static/script.js ] && cp static/script.js public/
+          [ -f static/icon/favicon.ico ] && cp static/icon/favicon.ico public/
+          [ -f crypto_chart.html ] && cp crypto_chart.html public/
+          [ -f analysis.txt ] && cp analysis.txt public/
 
-      - name: 🚀 Upload artifacts for GitHub Pages.
-        uses: actions/upload-pages-artifact@v3
+      - name: 🚀 Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
-      - name: 🌍 Deploy to GitHub Pages.
+      - name: 🌍 Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
