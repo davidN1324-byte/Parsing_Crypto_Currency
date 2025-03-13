@@ -5,7 +5,7 @@ on:
     - cron: '0 * * * *'  # Run every hour
   push:
     branches:
-      - main  # Run on push to the main branch
+      - master  # Run on push to the master branch
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 permissions:
