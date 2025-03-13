@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run once an hour.
+    - cron: '0 * * * *'
   push:
     branches:
       - master
-  workflow_dispatch:  # Option for manual execution.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -52,10 +52,9 @@ jobs:
           cp analysis.txt public/
 
       - name: 🚀 Uploading the artifact for GitHub Pages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: page-files
           path: ./public
 
       - name: 🌍 Publishing to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v2
