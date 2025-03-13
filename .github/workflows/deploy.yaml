@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Running once an hour.
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Option for manual execution.
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Cloning the repository.
+        uses: actions/checkout@v4
+
+      - name: 🔧 Installing dependencies.
+        run: pip install pandas plotly
+
+      - name: 📊 Generating the chart and analysis.
+        run: python analysis.py  # This script creates `crypto_graph.html` and `analysis.txt`.
+
+      - name: 📂 Preparing files for publication
+        run: |
+          mkdir -p public
+          cp templates/index.html public/index.html
+          cp static/styles.css public/
+          cp static/script.js public/
+          cp static/icon/favicon.ico public/  # Копируем favicon.ico
+          cp crypto_graph.html public/
+          cp analysis.txt public/
+
+      - name: 🚀 Uploading the artifact for GitHub Pages.
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./public
+
+      - name: 🌍 Publishing on GitHub Pages.
+        uses: actions/deploy-pages@v2
