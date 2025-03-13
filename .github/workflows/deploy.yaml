@@ -33,6 +33,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
+          git status
           git add crypto_chart.html analysis.txt
           git commit -m "Auto-update chart and analysis [skip ci]" || echo "No changes to commit"
           git push
