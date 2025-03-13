@@ -2,14 +2,14 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
+    - cron: '0 * * * *'  # Running once an hour.
   push:
     branches:
       - master
-  workflow_dispatch:  # Allows manual execution
+  workflow_dispatch:  # Option for manual execution.
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -18,27 +18,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clone the repository
+      - name: 📥 Cloning the repository.
         uses: actions/checkout@v4
 
-      - name: 🔧 Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: 📊 Generate the chart and analysis
+      - name: 🔧 Installing dependencies.
         run: |
-          python analysis.py
-          python graf.py
+          pip install -r requirements.txt
 
-      - name: 📂 Commit and push generated files
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
-          git status
-          git add crypto_chart.html analysis.txt
-          git commit -m "Auto-update chart and analysis [skip ci]" || echo "No changes to commit"
-          git push
+      - name: 📊 Generating the chart and analysis.
+        run: python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
 
-      - name: 📂 Prepare files for publication
+      - name: 📂 Preparing files for publication
         run: |
           mkdir -p public
           cp templates/index.html public/index.html
@@ -48,10 +38,20 @@ jobs:
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Upload the artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: 📂 Commit and push generated files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add crypto_chart.html analysis.txt
+          git commit -m "Auto-update chart and analysis [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚀 Uploading the artifact for GitHub Pages.
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./public
 
-      - name: 🌍 Deploy to GitHub Pages
+      - name: 🌍 Publishing on GitHub Pages.
         uses: actions/deploy-pages@v2
