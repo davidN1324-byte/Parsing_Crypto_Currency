@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run once an hour
+    - cron: '0 * * * *'  # Runs every hour
   push:
     branches:
       - main
-  workflow_dispatch:  # Manual trigger option
+  workflow_dispatch:  # Allows manual execution
 
 permissions:
   contents: read
@@ -18,17 +18,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clone the repository
+      - name: 📥 Clone repository
         uses: actions/checkout@v4
 
       - name: 🔧 Install dependencies
-        run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "⚠️ requirements.txt not found!"; exit 1; fi
+        run: pip install -r requirements.txt
 
       - name: 📊 Generate chart and analysis
         run: |
-          python graf.py   # Generates crypto_chart.html
-          python analysis.py  # Generates analysis.txt
+          python graf.py
+          python analysis.py
+
+      - name: 🔍 Check if files exist
+        run: ls -l crypto_chart.html analysis.txt
 
       - name: 📂 Prepare files for publication
         run: |
@@ -36,13 +38,14 @@ jobs:
           cp templates/index.html public/index.html
           cp static/styles.css public/
           cp static/script.js public/
-          cp static/icon/favicon.ico public/  # Copy favicon.ico
+          cp static/icon/favicon.ico public/
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: 🚀 Upload artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: ./public
 
       - name: 🌍 Deploy to GitHub Pages
