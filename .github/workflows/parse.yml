@@ -19,13 +19,13 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # 📂 Checkout the repository
 
       # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: '3.x'  # 🐍 Use a specific Python version to avoid unexpected changes
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -44,7 +44,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           
           git add cryptocurrencies_history.csv
-          git commit -m "Update crypto data" || echo "No changes to commit"
-          git push
+          git commit -m "Update crypto data" || exit 0  # Exit without error if no changes to commit
+          git push || exit 0  # 🚀 Ignore push failure if there is nothing to push  # Ignore push failure if there is nothing to push
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the Personal Access Token (PAT) for authentication

@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Running once an hour.
+    - cron: '0 * * * *'  # Runs every hour.
   push:
     branches:
       - main
-  workflow_dispatch:  # Option for manual execution.
+  workflow_dispatch:  # Allows manual execution.
 
 permissions:
   contents: read
@@ -18,18 +18,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Cloning the repository.
+      - name: 📥 Clone the repository.
         uses: actions/checkout@v4
 
-      - name: 🔧 Installing dependencies.
-        run: pip install pandas plotly
+      - name: 🔧 Install dependencies.
+        run: pip install -r requirements.txt  # Install dependencies from requirements.txt
 
-      - name: 📊 Generating the chart and analysis.
+      - name: 📊 Generate the chart and analysis.
+        run: python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
+
+      - name: 📂 Verify generated files.
         run: |
-          python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
-          python graf.py      # If you have another script to generate the chart.
+          echo "Files in the repository:"
+          ls -alh
+          echo "Files in the public directory before publication:"
+          ls -alh ./public || echo "The public directory does not exist"
 
-      - name: 📂 Preparing files for publication
+      - name: 📂 Prepare files for publication.
         run: |
           mkdir -p public
           cp templates/index.html public/index.html
@@ -39,10 +44,10 @@ jobs:
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Uploading the artifact for GitHub Pages.
+      - name: 🚀 Upload artifacts for GitHub Pages.
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
-      - name: 🌍 Publishing on GitHub Pages.
+      - name: 🌍 Deploy to GitHub Pages.
         uses: actions/deploy-pages@v3
