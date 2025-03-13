@@ -2,14 +2,14 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # Run once an hour.
   push:
     branches:
       - master
-  workflow_dispatch:
+  workflow_dispatch:  # Option for manual execution.
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -51,7 +51,15 @@ jobs:
           cp crypto_chart.html public/
           cp analysis.txt public/
 
-      - name: 🚀 Uploading the artifact for GitHub Pages
+      - name: 🚀 Committing and pushing generated files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add crypto_chart.html analysis.txt
+          git commit -m "Add generated chart and analysis" || exit 0  # Exit without error if no changes to commit
+          git push || exit 0  # 🚀 Ignore push failure if there is nothing to push
+
+      - name: Uploading the artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
