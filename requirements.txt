@@ -3,5 +3,3 @@ beautifulsoup4
 pandas
 matplotlib
 plotly
-langchain 
-openai
