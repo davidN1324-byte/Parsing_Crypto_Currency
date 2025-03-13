@@ -26,7 +26,7 @@ jobs:
 
       - name: 📊 Generating the chart and analysis.
         run: |
-          python analysis.py  # This script creates `crypto_graph.html` and `analysis.txt`.
+          python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
           python graf.py      # If you have another script to generate the chart.
 
       - name: 📂 Preparing files for publication
@@ -36,7 +36,7 @@ jobs:
           cp static/styles.css public/
           cp static/script.js public/
           cp static/icon/favicon.ico public/  # Copy favicon.ico
-          cp crypto_graph.html public/
+          cp crypto_chart.html public/
           cp analysis.txt public/
 
       - name: 🚀 Uploading the artifact for GitHub Pages.
