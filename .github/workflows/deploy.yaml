@@ -3,36 +3,44 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master  # Trigger on changes to the master branch
-  workflow_dispatch:  # Allows manual triggering from GitHub interface
-  schedule:
-    - cron: '0 * * * *'  # Schedule the workflow to run every hour on the hour
+      - master
+  workflow_dispatch:  # Allows manual execution
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2  # Checkout the repository code
+      - name: 📥 Cloning the repository.
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v2  # Set up Python environment
-      with:
-        python-version: '3.9'  # Set the Python version you need
+      - name: 🔧 Installing dependencies.
+        run: pip install pandas plotly
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt  # Install the dependencies listed in requirements.txt
+      - name: 📊 Generating the chart and analysis.
+        run: python analysis.py 
+      
+      - name: 📊 Generating the chart and analysis.
+        run: python graf.py #This script will create `crypto_graph.html` and `analysis.txt`
 
-    - name: Generate graph and analysis
-      run: |
-        python graph.py  # Run the script to generate the graph
-        python analysis.py  # Run the script to generate the analysis
+      - name: 📂 Preparing files for publication
+        run: |
+          mkdir -p public
+          cp templates/index.html public/index.html
+          cp static/styles.css public/
+          cp static/script.js public/
+          cp crypto_graph.html public/
+          cp analysis.txt public/
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4  # Action to deploy to GitHub Pages
-      with:
-        branch: gh-pages  # Branch to deploy to (GitHub Pages will serve files from this branch)
-        folder: docs  # Folder containing the files to deploy (ensure the files are in this folder)
-        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token to authenticate the deployment
+      - name: 🚀 Uploading the artifact for GitHub Pages.
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./public
+
+      - name: 🌍 Publishing on GitHub Pages.
+        uses: actions/deploy-pages@v2
