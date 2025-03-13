@@ -1,68 +1,36 @@
 name: Deploy to GitHub Pages
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # Run once an hour.
   push:
     branches:
-      - master
-  workflow_dispatch:  # Option for manual execution.
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+      - master  # Trigger on changes to the master branch
+  workflow_dispatch:  # Allows manual triggering from GitHub interface
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
     steps:
-      - name: 📥 Cloning the repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Checkout the repository code
 
-      - name: 🔧 Setting up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
+    - name: Set up Python
+      uses: actions/setup-python@v2  # Set up Python environment
+      with:
+        python-version: '3.9'  # Set the Python version you need
 
-      - name: Installing dependencies
-        run: |
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Install the dependencies listed in requirements.txt
 
-      - name: 📊 Running analysis and generating chart
-        run: |
-          python analysis.py
-          python graf.py
+    - name: Generate graph and analysis
+      run: |
+        python generate_graph.py  # Run the script to generate the graph
+        python generate_analysis.py  # Run the script to generate the analysis
 
-      - name: 🧐 Check file generation
-        run: |
-          ls -l
-          ls -l crypto_chart.html
-          ls -l analysis.txt
-
-      - name: 📂 Preparing files for publication
-        run: |
-          mkdir -p public
-          cp templates/index.html public/index.html
-          cp static/styles.css public/
-          cp static/script.js public/
-          cp static/icon/favicon.ico public/
-          cp crypto_chart.html public/
-          cp analysis.txt public/
-
-      - name: 🚀 Committing and pushing generated files
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
-          git add crypto_chart.html analysis.txt
-          git commit -m "Add generated chart and analysis" || exit 0  # Exit without error if no changes to commit
-          git push || exit 0  # 🚀 Ignore push failure if there is nothing to push
-
-      - name: Uploading the artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./public
-
-      - name: 🌍 Publishing to GitHub Pages
-        uses: actions/deploy-pages@v2
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4  # Action to deploy to GitHub Pages
+      with:
+        branch: gh-pages  # Branch to deploy to (GitHub Pages will serve files from this branch)
+        folder: docs  # Folder containing the files to deploy (ensure the files are in this folder)
+        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token to authenticate the deployment
