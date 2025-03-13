@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Running once an hour.
+    - cron: '0 * * * *'  # Run every hour
   push:
     branches:
-      - master
-  workflow_dispatch:  # Allows manual execution.
+      - main  # Run on push to the main branch
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 permissions:
   contents: read
@@ -15,21 +15,21 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
 
     steps:
-      - name: 📥 Cloning the repository.
-        uses: actions/checkout@v4
+      - name: 📥 Cloning the repository
+        uses: actions/checkout@v4  # Checkout the repository
 
-      - name: 🔧 Installing dependencies.
+      - name: 🔧 Installing dependencies
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Install dependencies from requirements.txt
 
-      - name: 📊 Generating the chart.
-        run: python graf.py  # This script generates the chart
-
-      - name: 📊 Generating the analysis.
-        run: python analysis.py  # This script creates `crypto_chart.html` and `analysis.txt`.
+      - name: 📊 Running analysis and generating chart
+        run: |
+          python analysis.py  # Run analysis.py to generate data
+          python graf.py  # Generate the chart
 
       - name: 📂 Preparing files for publication
         run: |
@@ -38,14 +38,13 @@ jobs:
           cp static/styles.css public/
           cp static/script.js public/
           cp static/icon/favicon.ico public/
-          cp crypto_chart.html public/
-          cp analysis.txt public/
+          cp crypto_chart.html public/  # Make sure the generated chart is copied
+          cp analysis.txt public/  # Copy the analysis file
 
-      - name: 🚀 Uploading the artifact for GitHub Pages.
-        uses: actions/upload-artifact@v4
+      - name: 🚀 Uploading the artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: website-files
           path: ./public
 
-      - name: 🌍 Publishing on GitHub Pages.
-        uses: actions/deploy-pages@v2
+      - name: 🌍 Publishing on GitHub Pages
+        uses: actions/deploy-pages@v4
