@@ -33,7 +33,7 @@ jobs:
           cp templates/index.html public/index.html
           cp static/styles.css public/
           cp static/script.js public/
-          cp static/icon/favicon.ico public/  # Копируем favicon.ico
+          cp static/icon/favicon.ico public/
           cp crypto_graph.html public/
           cp analysis.txt public/
 
