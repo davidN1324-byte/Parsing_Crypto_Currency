@@ -2,11 +2,10 @@ name: Deploy Site GH Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: ["master"]
+  workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes
-  workflow_dispatch:  # Manually trigger
+    - cron: "*/30 * * * *"  
 
 jobs:
   build:
@@ -31,6 +30,12 @@ jobs:
 
       - name: Run analysis.py
         run: python analysis.py
+
+      - name: Pull latest changes
+        run: git pull origin master
+
+      - name: Create docs folder
+        run: mkdir -p docs
 
       - name: List files in docs folder
         run: ls -l docs/
