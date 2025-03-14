@@ -2,10 +2,9 @@ name: Deploy Site GH Pages
 
 on:
   push:
-    branches: ["master"]
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"  
+    - cron: '0 * * * *'
 
 jobs:
   build:
