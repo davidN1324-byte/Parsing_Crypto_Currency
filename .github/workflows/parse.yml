@@ -3,23 +3,21 @@ name: Parse Crypto Data
 on:
   schedule:
     - cron: '0 * * * *'
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
   update-data:
+    if: github.actor != 'github-actions'  # ⛔ Do not run if the commit was made by GitHub Actions
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -28,7 +26,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run parsing script
-        run: python main.py
+        run: |
+          python main.py
 
       - name: Commit and push updated data
         env:
@@ -36,6 +35,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
+
           git add cryptocurrencies_history.csv
           git commit -m "Update crypto data" || exit 0
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git

@@ -1,9 +1,6 @@
 name: Deploy Site GH Pages
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
   schedule:
     - cron: '0 * * * *'
@@ -11,8 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout repository
@@ -33,6 +28,12 @@ jobs:
 
       - name: Run analysis.py
         run: python analysis.py
+
+      - name: Create docs folder
+        run: mkdir -p docs
+
+      - name: List files in docs folder
+        run: ls -l docs/
 
       - name: Publish to GitHub Pages
         env:
