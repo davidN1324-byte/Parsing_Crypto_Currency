@@ -1,50 +1,41 @@
 name: Parse Crypto Data
 
-# Triggers for executing the workflow
 on:
   schedule:
-    # Run every hour
     - cron: '0 * * * *'
   push:
     branches:
-      - master  # Run on every push to the master branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+      - master
+  workflow_dispatch:
 
 jobs:
   update-data:
-    runs-on: ubuntu-latest  # Use the latest version of Ubuntu for execution
+    runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3  # 📂 Checkout the repository
+        uses: actions/checkout@v3
 
-      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'  # 🐍 Use a specific Python version to avoid unexpected changes
+          python-version: '3.x'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # Step 4: Run the data scraping script
       - name: Run parsing script
-        run: |
-          python main.py
+        run: python main.py
 
-      # Step 5: Commit and push the updated data to the repository
       - name: Commit and push updated data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-          
           git add cryptocurrencies_history.csv
-          git commit -m "Update crypto data" || exit 0  # Exit without error if no changes to commit
-          git push || exit 0  # 🚀 Ignore push failure if there is nothing to push  # Ignore push failure if there is nothing to push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the Personal Access Token (PAT) for authentication
+          git commit -m "Update crypto data" || exit 0
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git

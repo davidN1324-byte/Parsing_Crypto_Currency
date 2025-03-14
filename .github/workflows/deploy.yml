@@ -2,6 +2,8 @@ name: Deploy Site GH Pages
 
 on:
   push:
+    branches:
+      - master
   workflow_dispatch:
   schedule:
     - cron: '0 * * * *'
@@ -9,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -30,19 +34,12 @@ jobs:
       - name: Run analysis.py
         run: python analysis.py
 
-      - name: Pull latest changes
-        run: git pull origin master
-
-      - name: Create docs folder
-        run: mkdir -p docs
-
-      - name: List files in docs folder
-        run: ls -l docs/
-
       - name: Publish to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git config --global user.name "github-actions"
+          git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
           git add docs/
-          git commit -m "Update site content"
-          git push
+          git commit -m "Update site content" || exit 0
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
