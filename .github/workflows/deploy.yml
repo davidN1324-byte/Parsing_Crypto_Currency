@@ -38,10 +38,6 @@ jobs:
       - name: 📂 Ensure docs folder exists
         run: mkdir -p docs
 
-      - name: 📜 Move analysis result to docs
-        if: env.IS_ANALYSIS_RUN == 'true'
-        run: mv analysis.txt docs/analysis.txt
-
       - name: 📝 List files in docs folder
         run: ls -l docs/
 
