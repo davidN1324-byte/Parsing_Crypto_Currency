@@ -1,27 +1,17 @@
-import subprocess
-from flask import Flask, render_template
+from flask import Flask, send_from_directory
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='docs')
 
-# Executing the necessary scripts.
-subprocess.run(["python", "analysis.py"])
-subprocess.run(["python", "graf.py"])
+DOCS_DIR = os.path.join(os.getcwd(), 'docs')
 
 @app.route('/')
-def home():
-    graph_html = ""
-    if os.path.exists("crypto_chart.html"):
-        with open("crypto_chart.html", "r") as file:
-            graph_html = file.read()
+def serve_index():
+    return send_from_directory(DOCS_DIR, 'index.html')
 
-    # Reading the analysis text (analysis.txt)
-    analysis_content = ""
-    if os.path.exists("analysis.txt"):
-        with open("analysis.txt", "r") as file:
-            analysis_content = file.read()
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(DOCS_DIR, filename)
 
-    return render_template('index.html', graph_html=graph_html, analysis_content=analysis_content)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=5000, debug=True)
