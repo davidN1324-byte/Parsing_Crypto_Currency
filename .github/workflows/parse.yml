@@ -2,40 +2,46 @@ name: Parse Crypto Data
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *'  # Run every hour.
+  workflow_dispatch:  # Manual execution through GitHub Actions.
 
 jobs:
   update-data:
-    if: github.actor != 'github-actions'  # ⛔ Do not run if the commit was made by GitHub Actions
+    if: github.actor != 'github-actions'  # Do not run if the commit was made by GitHub Actions.
     runs-on: ubuntu-latest
+
     permissions:
-      contents: write
+      contents: write  # Write access is required for commits.
 
     steps:
-      - name: Checkout repository
+      - name: 🔄 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: |
           pip install -r requirements.txt
 
-      - name: Run parsing script
+      - name: 🚀 Run parsing script (main.py)
         run: |
           python main.py
 
-      - name: Commit and push updated data
+      - name: 📤 Commit and push updated data
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Security token for commits.
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
 
           git add cryptocurrencies_history.csv
-          git commit -m "Update crypto data" || exit 0
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+          # Check if there were any changes before committing.
+          if git diff --cached --quiet; then
+            echo "No changes detected, skipping commit."
+          else
+            git commit -m "Update crypto data"
+            git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+          fi
