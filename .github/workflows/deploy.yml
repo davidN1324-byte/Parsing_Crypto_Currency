@@ -5,12 +5,9 @@ on:
   schedule:
     - cron: '0 * * * *'  # Run every hour for the chart.
     - cron: '0 */12 * * *'  # Run every 12 hours for the analysis.
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      IS_ANALYSIS_RUN: ${{ github.event.schedule == '0 */12 * * *' }}
 
     steps:
       - name: 🔄 Checkout repository
@@ -30,11 +27,10 @@ jobs:
         run: python graf.py
 
       - name: 🤖 Run analysis.py (Analyze data with OpenAI)
-        if: ${{ env.IS_ANALYSIS_RUN == 'true' }}
+        if: ${{ github.event_name == 'schedule' && github.event.schedule == '0 */12 * * *' || github.event_name == 'workflow_dispatch' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python analysis.py
-
 
       - name: 📂 Ensure docs folder exists
         run: mkdir -p docs
