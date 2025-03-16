@@ -1,4 +1,4 @@
-name: Deploy Site to GitHub Pages
+name: 🚀 Deploy Site to GitHub Pages
 
 on:
   workflow_dispatch:  # Manual execution through GitHub Actions.
@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      IS_ANALYSIS_RUN: ${{ github.event.schedule == '0 */12 * * *' }}
 
     steps:
       - name: 🔄 Checkout repository
@@ -25,33 +27,31 @@ jobs:
           pip install -r requirements.txt
 
       - name: 📊 Run graf.py (Generate graph)
-        if: github.event.schedule == '0 * * * *' # Run only for the chart every hour
         run: python graf.py
 
       - name: 🤖 Run analysis.py (Analyze data with OpenAI)
-        if: github.event.schedule == '0 */12 * * *'  # Run only for the analysis every 12 hours.
+        if: env.IS_ANALYSIS_RUN == 'true'
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # Token for OpenAI from GitHub Secrets
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python analysis.py
 
-      - name: 📂 Create docs folder
+      - name: 📂 Ensure docs folder exists
         run: mkdir -p docs
+
+      - name: 📜 Move analysis result to docs
+        if: env.IS_ANALYSIS_RUN == 'true'
+        run: mv analysis.txt docs/analysis.txt
 
       - name: 📝 List files in docs folder
         run: ls -l docs/
 
       - name: 📤 Commit and push docs folder
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Security token for deployment.
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
           
           git add docs/
-          # Check if there were any changes in the `docs` folder.
-          if git diff --cached --quiet; then
-            echo "No changes detected in docs folder, skipping commit."
-          else
-            git commit -m "Update site content"
-            git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-          fi
+          git diff --staged --quiet || git commit -m "🔄 Update site content"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git || echo "No changes to push"
