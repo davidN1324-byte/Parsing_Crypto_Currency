@@ -8,7 +8,7 @@ from datetime import datetime
 
 # File to store the history
 csv_filename = "cryptocurrencies_history.csv"
-max_records = 300  # Maximum number of records to store in the file
+max_records = 5000  # Maximum number of records to store in the file
 
 # Read all User-Agent strings from the file
 with open("user_agents.txt", "r") as file:
