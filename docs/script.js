@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Загружаем график
+    // Loading the chart
     fetch("crypto_chart.html")
         .then(response => {
             if (!response.ok) {
-                throw new Error("Ошибка загрузки графика");
+                throw new Error("Chart loading error");
             }
             return response.text();
         })
@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             console.error(error);
-            document.getElementById("plotly-chart").innerHTML = "<p>Ошибка загрузки графика</p>";
+            document.getElementById("plotly-chart").innerHTML = "<p>Chart loading error</p>";
         });
 
-    // Загружаем текст анализа
+    // Loading the analysis text
     fetch("analysis.txt")
         .then(response => {
             if (!response.ok) {
-                throw new Error("Ошибка загрузки анализа");
+                throw new Error("Analysis loading error");
             }
             return response.text();
         })
@@ -28,6 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             console.error(error);
-            document.getElementById("analysis-text").textContent = "Ошибка загрузки анализа";
+            document.getElementById("analysis-text").textContent = "Analysis loading error";
         });
 });
