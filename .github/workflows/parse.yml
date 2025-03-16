@@ -15,14 +15,13 @@ jobs:
     steps:
       - name: 🔄 Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch the entire history to avoid push conflicts
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # Use Python 3.9 for stability
-
-      - name: 🔍 Check installed Python version
-        run: python --version
+          python-version: '3.9'
 
       - name: 📦 Install dependencies
         run: pip install -r requirements.txt
@@ -44,6 +43,10 @@ jobs:
             echo "✅ No changes detected, skipping commit."
           else
             git commit -m "🔄 Update crypto data and analysis"
-            git pull --rebase  # Avoid conflicts
+            
+            # Pull the latest changes to prevent conflicts
+            git pull --rebase
+            
+            # Force push to resolve conflicts automatically (use with caution)
             git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           fi
