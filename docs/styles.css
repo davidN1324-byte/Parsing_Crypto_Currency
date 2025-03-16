@@ -13,7 +13,7 @@ body {
     line-height: 1.6;
 }
 
-/* **Styles for headings***/
+/* **Styles for headings** */
 .main-header {
     text-align: center;
     padding: 40px 20px;
@@ -84,6 +84,50 @@ section {
     white-space: pre-wrap;
     word-wrap: break-word;
     line-height: 1.5;
+    overflow-wrap: break-word;  /* Break long words */
+    word-break: break-word;     /* Break words if necessary */
+    max-width: 100%;            /* Limit width */
+    overflow: auto;            /* Add scrolling if text is too much */
+    padding: 10px;             /* Add some padding for readability */
+}
+
+/* Styles for text with scrolling */
+#analysis-text {
+    white-space: pre-wrap;      /* Keeps spaces and line breaks */
+    word-wrap: break-word;      /* Word break */
+    overflow: auto;             /* Scrolling when overflowing */
+    max-height: 500px;          /* Limit height */
+    overflow-y: auto;           /* Vertical scrolling */
+    padding: 10px;
+}
+
+/* Scrollbar styles for analysis */
+#analysis-text::-webkit-scrollbar {
+    width: 10px;  /* Vertical scrollbar width */
+    height: 10px; /* Horizontal scrollbar height */
+}
+
+/* Styles for the scrollbar thumb */
+#analysis-text::-webkit-scrollbar-thumb {
+    background-color: #4caf50;  /* Thumb color */
+    border-radius: 10px;        /* Rounded corners */
+    border: 2px solid #2e7d32;  /* Border around the thumb */
+}
+
+/* Styles for the scrollbar thumb on hover */
+#analysis-text::-webkit-scrollbar-thumb:hover {
+    background-color: #388e3c;  /* Thumb color on hover */
+}
+
+/* Styles for the scrollbar track background */
+#analysis-text::-webkit-scrollbar-track {
+    background-color: #333;     /* Scrollbar track background */
+    border-radius: 10px;
+}
+
+/* Styles for the scrollbar corner */
+#analysis-text::-webkit-scrollbar-corner {
+    background-color: transparent;
 }
 
 /* Footer */
