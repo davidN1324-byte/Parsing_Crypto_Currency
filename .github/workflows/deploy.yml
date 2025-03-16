@@ -3,7 +3,7 @@ name: 🚀 Deploy Site to GitHub Pages
 on:
   workflow_dispatch:  # Manual execution through GitHub Actions.
   schedule:
-    - cron: '0 * * * *'  # Run every hour for the chart.
+    - cron: '0 */6 * * *'  # Run every 6 hours for the chart.
     - cron: '0 */12 * * *'  # Run every 12 hours for the analysis.
 jobs:
   build:
