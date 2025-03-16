@@ -30,10 +30,11 @@ jobs:
         run: python graf.py
 
       - name: 🤖 Run analysis.py (Analyze data with OpenAI)
-        if: env.IS_ANALYSIS_RUN == 'true'
+        if: ${{ env.IS_ANALYSIS_RUN == 'true' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python analysis.py
+
 
       - name: 📂 Ensure docs folder exists
         run: mkdir -p docs
