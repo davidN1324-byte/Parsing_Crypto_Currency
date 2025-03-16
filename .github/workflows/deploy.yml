@@ -41,13 +41,13 @@ jobs:
       - name: 📝 List files in docs folder
         run: ls -l docs/
 
-      - name: 📤 Commit and push docs folder
+      - name: 📤 Commit and push docs folder (including analysis.txt)
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-          
-          git add docs/
-          git diff --staged --quiet || git commit -m "🔄 Update site content"
+
+          git add docs/analysis.txt docs/  # Явно добавляем analysis.txt
+          git diff --staged --quiet || git commit -m "🔄 Update analysis & site content"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git || echo "No changes to push"
