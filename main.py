@@ -6,17 +6,17 @@ import csv
 import os
 from datetime import datetime
 
-# Файл для сохранения истории
+# File for saving history
 csv_filename = "cryptocurrencies_history.csv"
 
-# Считываем все User-Agent из файла
+# Read all User-Agents from the file
 with open("user_agents.txt", "r") as file:
     user_agents = file.readlines()
 
-# Выбираем случайный User-Agent
-user_agent = random.choice(user_agents).strip()  # Берем одну строку из списка и удаляем лишние пробелы и символы новой строки
+# Select a random User-Agent
+user_agent = random.choice(user_agents).strip()  # Take one line from the list and remove extra spaces and newline characters
 
-# Заголовки для запроса
+# Request headers
 headers = {
     "User-Agent": user_agent
 }
@@ -26,7 +26,7 @@ response = requests.get(url, headers=headers)
 
 soup = BeautifulSoup(response.text, "html.parser")
 
-# Текущая дата и время
+# Current date and time
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 coins = []
@@ -39,26 +39,26 @@ for code_tag, name_tag, price_tag in zip(
     name = name_tag.get_text(strip=True)
     price_text = price_tag.get_text(strip=True)
     
-    # Преобразуем цену в число
+    # Convert price to a number
     price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))
     coins.append((code, name, price))
 
-# Сортируем по убыванию цены
+# Sort in descending order by price
 coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
-# Проверяем, существует ли файл и пуст ли он
+# Check if the file exists and is not empty
 file_exists = os.path.isfile(csv_filename) and os.path.getsize(csv_filename) > 0
 
-# Открываем файл в режиме добавления (append)
+# Open the file in append mode
 with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
 
-    # Если файл только создается — пишем заголовок
+    # If the file is being created for the first time, write the header
     if not file_exists:
         writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price  ($)"])
 
-    # Записываем данные с временной меткой
+    # Write data with a timestamp
     for index, coin in enumerate(coins_sorted[:10], start=1):
         writer.writerow([timestamp, index, coin[1], coin[0], coin[2]])
 
-print(f"Данные сохранены в '{csv_filename}' с историей.")
+print(f"Data saved in '{csv_filename}' with history.")
