@@ -6,18 +6,17 @@ import csv
 import os
 from datetime import datetime
 
-# File to store the history
+# Файл для сохранения истории
 csv_filename = "cryptocurrencies_history.csv"
-max_records = 5000  # Maximum number of records to store in the file
 
-# Read all User-Agent strings from the file
+# Считываем все User-Agent из файла
 with open("user_agents.txt", "r") as file:
     user_agents = file.readlines()
 
-# Select a random User-Agent
-user_agent = random.choice(user_agents).strip()  # Pick one string from the list and remove extra spaces and newlines
+# Выбираем случайный User-Agent
+user_agent = random.choice(user_agents).strip()  # Берем одну строку из списка и удаляем лишние пробелы и символы новой строки
 
-# Headers for the request
+# Заголовки для запроса
 headers = {
     "User-Agent": user_agent
 }
@@ -25,14 +24,12 @@ headers = {
 url = "https://finance.ua/ua/crypto"
 response = requests.get(url, headers=headers)
 
-# Parse the HTML response
 soup = BeautifulSoup(response.text, "html.parser")
 
-# Current timestamp
+# Текущая дата и время
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 coins = []
-# Extract coin data from the page
 for code_tag, name_tag, price_tag in zip(
         soup.find_all("p", class_="CoinsListstyles__Code-sc-1c8245s-24 lgioIM"),
         soup.find_all("p", class_="CoinsListstyles__Name-sc-1c8245s-23 kVPjIs"),
@@ -42,44 +39,26 @@ for code_tag, name_tag, price_tag in zip(
     name = name_tag.get_text(strip=True)
     price_text = price_tag.get_text(strip=True)
     
-    # Convert price to a float
+    # Преобразуем цену в число
     price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))
     coins.append((code, name, price))
 
-# Sort coins by price in descending order
+# Сортируем по убыванию цены
 coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
-# Check if the file exists and is not empty
+# Проверяем, существует ли файл и пуст ли он
 file_exists = os.path.isfile(csv_filename) and os.path.getsize(csv_filename) > 0
 
-# Read the current data from the file
-existing_data = []
-if file_exists:
-    with open(csv_filename, mode="r", newline="", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        existing_data = list(reader)
-
-# Open the file in append mode to add new data
+# Открываем файл в режиме добавления (append)
 with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
 
-    # If the file is being created, write the header
+    # Если файл только создается — пишем заголовок
     if not file_exists:
-        writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price ($)"])
+        writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price  ($)"])
 
-    # Write the new data with the timestamp
+    # Записываем данные с временной меткой
     for index, coin in enumerate(coins_sorted[:10], start=1):
         writer.writerow([timestamp, index, coin[1], coin[0], coin[2]])
 
-    # Keep only the last max_records rows
-    all_data = existing_data + [(timestamp, index, coin[1], coin[0], coin[2]) for index, coin in enumerate(coins_sorted[:10], start=1)]
-    if len(all_data) > max_records:
-        all_data = all_data[-max_records:]
-
-    # Rewrite the file with the limited number of records
-    with open(csv_filename, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price ($)"])
-        writer.writerows(all_data)
-
-print(f"Data has been saved to '{csv_filename}' with history.")
+print(f"Данные сохранены в '{csv_filename}' с историей.")
