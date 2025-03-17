@@ -1,6 +1,7 @@
 Date and Time,#,Full Name,Abbreviation,Price ($)
 Date and Time,#,Full Name,Abbreviation,Price ($)
 Date and Time,#,Full Name,Abbreviation,Price ($)
+Date and Time,#,Full Name,Abbreviation,Price ($)
 2025-03-11 01:32:33,1,Bitcoin,btc,79600.0
 2025-03-11 01:32:33,2,Wrapped Bitcoin,wbtc,79600.0
 2025-03-11 01:32:33,3,UGOLD Inc.,ugold,3050.0
@@ -1911,3 +1912,23 @@ Date and Time,#,Full Name,Abbreviation,Price ($)
 2025-03-17 06:26:03,8,Wrapped SOL,wrsol,144.0
 2025-03-17 06:26:03,9,Solana,sol,128.0
 2025-03-17 06:26:03,10,Litecoin,ltc,92.7
+2025-03-17 12:36:28,1,Bitcoin,btc,83500.0
+2025-03-17 12:36:28,2,Wrapped Bitcoin,wbtc,83300.0
+2025-03-17 12:36:28,3,UGOLD Inc.,ugold,3050.0
+2025-03-17 12:36:28,4,Wrapped stETH,wsteth,2290.0
+2025-03-17 12:36:28,5,Ethereum,eth,1910.0
+2025-03-17 12:36:28,6,Lido Staked Ether,steth,1910.0
+2025-03-17 12:36:28,7,BNB,bnb,631.0
+2025-03-17 12:36:28,8,Wrapped SOL,wrsol,144.0
+2025-03-17 12:36:28,9,Solana,sol,129.0
+2025-03-17 12:36:28,10,Litecoin,ltc,93.1
+2025-03-17 12:36:28,1,Bitcoin,btc,83500.0
+2025-03-17 12:36:28,2,Wrapped Bitcoin,wbtc,83300.0
+2025-03-17 12:36:28,3,UGOLD Inc.,ugold,3050.0
+2025-03-17 12:36:28,4,Wrapped stETH,wsteth,2290.0
+2025-03-17 12:36:28,5,Ethereum,eth,1910.0
+2025-03-17 12:36:28,6,Lido Staked Ether,steth,1910.0
+2025-03-17 12:36:28,7,BNB,bnb,631.0
+2025-03-17 12:36:28,8,Wrapped SOL,wrsol,144.0
+2025-03-17 12:36:28,9,Solana,sol,129.0
+2025-03-17 12:36:28,10,Litecoin,ltc,93.1
