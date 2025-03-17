@@ -6,10 +6,10 @@ import csv
 import os
 from datetime import datetime
 
-# Файл для сохранения истории
+# File for saving history
 csv_filename = "cryptocurrencies_history.csv"
 
-# Читаем User-Agent'ы
+# Reading User-Agents
 with open("user_agents.txt", "r") as file:
     user_agents = file.readlines()
 
@@ -35,22 +35,22 @@ for code_tag, name_tag, price_tag in zip(
     price = float(re.sub(r"[^\d.,]", "", price_text).replace(",", "."))
     coins.append((code, name, price))
 
-# Сортируем по убыванию цены
+# Sorting by price in descending order
 coins_sorted = sorted(coins, key=lambda x: x[2], reverse=True)
 
-# Проверка на существование заголовков в файле
+# Checking for headers existence in the file
 header_needed = not os.path.isfile(csv_filename) or os.stat(csv_filename).st_size == 0
 
-# Запись в CSV
+# Writing to CSV
 with open(csv_filename, mode="a", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
 
-    # Записываем заголовки только если файл пуст
+    # Writing headers only if the file is empty
     if header_needed:
         writer.writerow(["Date and Time", "#", "Full Name", "Abbreviation", "Price ($)"])
 
-    # Записываем данные
+    # Writing data
     for index, coin in enumerate(coins_sorted[:10], start=1):
         writer.writerow([timestamp, index, coin[1], coin[0], coin[2]])
 
-print(f"Данные сохранены в '{csv_filename}'.")
+print(f"Saving data to '{csv_filename}'.")
