@@ -1,10 +1,10 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-# Reading data from CSV
+# Read data from CSV
 df = pd.read_csv("cryptocurrencies_history.csv")
 
-# Ensure that the first row is not the header duplicated in data
+# Ensure that the first row is not a duplicated header
 if df.iloc[0, 0] == "Date and Time":
     df = df.iloc[1:].reset_index(drop=True)
 
@@ -14,8 +14,11 @@ df['Date and Time'] = pd.to_datetime(df['Date and Time'], format="%Y-%m-%d %H:%M
 # Remove rows where 'Date and Time' could not be converted
 df = df.dropna(subset=['Date and Time'])
 
-# Group by date and cryptocurrency, keeping the last price
+# Group by date and cryptocurrency, keeping the last recorded price
 df_grouped = df[['Date and Time', 'Abbreviation', 'Price ($)']].groupby(['Date and Time', 'Abbreviation']).last().reset_index()
+
+# Sort by date in descending order (latest prices first)
+df_grouped = df_grouped.sort_values(by="Date and Time", ascending=False)
 
 # Create an interactive chart
 fig = go.Figure()
@@ -32,12 +35,12 @@ for coin in df_grouped['Abbreviation'].unique():
         line=dict(width=2)
     ))
 
-# Chart settings
+# Configure chart settings
 fig.update_layout(
-    title="Change of cryptocurrency prices",
+    title="Cryptocurrency Price Changes",
     xaxis_title="Date and Time",
     yaxis_title="Price ($)",
-    legend_title="Crypto",
+    legend_title="Cryptocurrency",
     xaxis=dict(tickformat='%Y-%m-%d %H:%M:%S'),
     hovermode="closest"
 )
