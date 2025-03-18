@@ -27,7 +27,7 @@ jobs:
         run: python graf.py
 
       - name: 🤖 Run analysis.py (Analyze data with OpenAI)
-        if: ${{ github.event_name == 'schedule' && github.event.schedule == '0 */12 * * *' || github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python analysis.py
