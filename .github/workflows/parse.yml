@@ -2,7 +2,7 @@ name: 🚀 Parse Crypto Data
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
+    - cron: '0 */5 * * *'  # Run every 6 hours
   workflow_dispatch:  # Manual execution
 
 jobs:
