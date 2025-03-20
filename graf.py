@@ -1,8 +1,20 @@
 import pandas as pd
 import plotly.graph_objects as go
+import os
+
+# Check for CSV file existence
+csv_filename = "cryptocurrencies_history.csv"
+if not os.path.exists(csv_filename):
+    print(f"Файл {csv_filename} не найден. График не будет построен.")
+    exit(1)
+
+# Check for empty file
+if os.stat(csv_filename).st_size == 0:
+    print(f"Файл {csv_filename} пуст. Нет данных для графика.")
+    exit(1)
 
 # Read data from CSV
-df = pd.read_csv("cryptocurrencies_history.csv")
+df = pd.read_csv(csv_filename)
 
 # Ensure that the first row is not a duplicated header
 if df.iloc[0, 0] == "Date and Time":
@@ -41,8 +53,11 @@ fig.update_layout(
     xaxis_title="Date and Time",
     yaxis_title="Price ($)",
     legend_title="Cryptocurrency",
-    xaxis=dict(tickformat='%Y-%m-%d %H:%M:%S'),
-    hovermode="closest"
+    xaxis=dict(tickformat='%Y-%m-%d %H:%M:%S', showgrid=True),
+    yaxis=dict(showgrid=True),
+    hovermode="closest",
+    plot_bgcolor="rgba(0,0,0,0)",  # Прозрачный фон
+    paper_bgcolor="rgba(0,0,0,0)",
 )
 
 # Save the chart as an HTML file
