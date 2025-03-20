@@ -101,6 +101,7 @@ section {
     white-space: pre-wrap;
     word-wrap: break-word; /* Ensures long words break and wrap properly */
     overflow-wrap: break-word; /* Additional support for wrapping */
+    word-break: break-word; /* Ensure text breaks at long words */
     line-height: 1.5;
     max-width: 100%; /* Ensures no overflow from container */
     width: 100%;
