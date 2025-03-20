@@ -99,9 +99,9 @@ section {
 .analysis-content {
     font-family: 'Open Sans', sans-serif;
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-wrap: break-word; /* Ensures long words break and wrap properly */
+    overflow-wrap: break-word; /* Additional support for wrapping */
     line-height: 1.5;
-    overflow-wrap: break-word; /* Ensures text breaks properly to prevent overflow */
     max-width: 100%; /* Ensures no overflow from container */
     width: 100%;
     box-sizing: border-box;
