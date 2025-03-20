@@ -32,7 +32,7 @@ df_grouped = df[['Date and Time', 'Abbreviation', 'Price ($)']].groupby(['Date a
 # Sort by date in descending order (latest prices first)
 df_grouped = df_grouped.sort_values(by="Date and Time", ascending=False)
 
-# Create an interactive chart
+# Create a static (non-interactive) chart
 fig = go.Figure()
 
 # Add a line for each cryptocurrency
@@ -43,7 +43,7 @@ for coin in df_grouped['Abbreviation'].unique():
         y=coin_data['Price ($)'],
         mode='lines+markers',  # Lines + dots for better visibility
         name=coin,
-        hoverinfo='x+y+name',
+        hoverinfo='none',  # Disable hover information
         line=dict(width=2),
         marker=dict(size=4, symbol='circle', opacity=0.8)  # Customized dots
     ))
@@ -80,9 +80,10 @@ fig.update_layout(
     ),
     margin=dict(l=40, r=40, t=50, b=80),  # Adjust bottom margin for better label spacing
     width=1200,
-    height=600
+    height=600,
+    showlegend=True
 )
 
 # Save the chart as an HTML file
-fig.write_html("docs/crypto_chart.html")
-print("Chart saved in docs/crypto_chart.html")
+fig.write_html("docs/crypto_chart_static.html")
+print("Chart saved in docs/crypto_chart_static.html")
