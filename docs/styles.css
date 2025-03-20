@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #4caf50, #1d3b1a);
+    background: linear-gradient(135deg, #3e8e41, #1d3b1a);
     color: white;
     font-size: 16px;
     line-height: 1.6;
@@ -17,9 +17,9 @@ body {
 .main-header {
     text-align: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
     margin-top: 20px;
     animation: fadeIn 2s ease-out;
 }
@@ -27,9 +27,9 @@ body {
 .title {
     font-size: 3rem;
     font-weight: 700;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
     margin-bottom: 10px;
-    animation: slideIn 1s ease-in-out, zoomIn 1.2s ease-out;
+    animation: slideIn 1s ease-in-out;
 }
 
 .subheading {
@@ -52,7 +52,7 @@ h2, .section-title {
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 2px;
-    animation: fadeIn 2s ease-out, zoomIn 1s ease-out;
+    animation: fadeIn 2s ease-out;
 }
 
 section {
@@ -61,21 +61,24 @@ section {
 
 .chart-section {
     text-align: center;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .chart-container {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     animation: fadeInUp 2s ease-out;
+    display: inline-block;
 }
 
 .analysis-section {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 3s ease-out;
 }
 
@@ -87,67 +90,97 @@ section {
     overflow-wrap: break-word;
     max-width: 100%;
     overflow: auto;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    padding: 10px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
-/* Buttons */
-button {
-    background: linear-gradient(135deg, #4caf50, #388e3c);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+/* Scrollbar styles for analysis */
+#analysis-text::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
 }
 
-button:hover {
-    background: linear-gradient(135deg, #66bb6a, #43a047);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+#analysis-text::-webkit-scrollbar-thumb {
+    background-color: #4caf50;
+    border-radius: 10px;
+    border: 2px solid #2e7d32;
+}
+
+#analysis-text::-webkit-scrollbar-thumb:hover {
+    background-color: #388e3c;
+}
+
+#analysis-text::-webkit-scrollbar-track {
+    background-color: #333;
+    border-radius: 10px;
+}
+
+#analysis-text::-webkit-scrollbar-corner {
+    background-color: transparent;
 }
 
 /* Footer */
 .main-footer {
     text-align: center;
     padding: 20px;
-    background: #263238;
+    background-color: #2d3a3f;
     color: white;
     font-size: 1rem;
     margin-top: 40px;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 }
 
 /* **Animations** */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
-@keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* Responsive Design */
+/* We add responsiveness for mobile devices. */
 @media (max-width: 768px) {
-    .title { font-size: 2.5rem; }
-    .main-header { padding: 30px 15px; }
-    main { padding: 20px; }
-    .chart-container, .analysis-section { padding: 15px; }
-    button { width: 100%; }
-    footer { font-size: 0.875rem; }
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .main-header {
+        padding: 30px 15px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .chart-container, .analysis-section {
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 0.875rem;
+    }
 }
