@@ -13,7 +13,7 @@ body {
     line-height: 1.6;
 }
 
-/* **Styles for headings** */
+/* **Styles for headings***/
 .main-header {
     text-align: center;
     padding: 40px 20px;
@@ -94,18 +94,6 @@ section {
     white-space: pre-wrap;
     word-wrap: break-word;
     line-height: 1.5;
-    overflow-wrap: break-word;
-    max-width: 100%;
-    padding: 10px;
-}
-
-/* Styles for text with scrolling */
-#analysis-text {
-    white-space: normal;
-    word-wrap: break-word;
-    overflow: hidden; /* Remove the scrollbar */
-    max-height: none; /* Ensure there's no height limitation */
-    padding: 10px;
 }
 
 /* Footer */
