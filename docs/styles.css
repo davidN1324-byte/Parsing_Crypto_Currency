@@ -103,32 +103,9 @@ section {
 #analysis-text {
     white-space: normal;
     word-wrap: break-word;
-    overflow: auto;
-    max-height: 500px;
+    overflow: hidden; /* Remove the scrollbar */
+    max-height: none; /* Ensure there's no height limitation */
     padding: 10px;
-}
-
-/* Scrollbar styles for analysis */
-#analysis-text::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Styles for the scrollbar thumb */
-#analysis-text::-webkit-scrollbar-thumb {
-    background-color: #4caf50;
-    border-radius: 10px;
-    border: 2px solid #2e7d32;
-}
-
-/* Styles for the scrollbar thumb on hover */
-#analysis-text::-webkit-scrollbar-thumb:hover {
-    background-color: #388e3c;
-}
-
-/* Styles for the scrollbar track background */
-#analysis-text::-webkit-scrollbar-track {
-    background-color: #333;
-    border-radius: 10px;
 }
 
 /* Footer */
@@ -207,15 +184,9 @@ section {
 /* Custom styles for the interactive chart */
 .chart-section .plotly-graph-div {
     width: 100%;
-    height: 100%;
+    height: 600px; /* Fixed height for static chart */
     max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
     box-sizing: border-box; /* Prevents chart from overflowing */
-}
-
-/* Ensure chart container doesn't overflow on small screens */
-.chart-section {
-    width: 100%;
-    padding: 0 15px;
 }
