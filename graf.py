@@ -41,13 +41,14 @@ for coin in df_grouped['Abbreviation'].unique():
     fig.add_trace(go.Scatter(
         x=coin_data['Date and Time'],
         y=coin_data['Price ($)'],
-        mode='lines',
+        mode='lines+markers',  # Lines + dots for better visibility
         name=coin,
         hoverinfo='x+y+name',
-        line=dict(width=2)
+        line=dict(width=2),
+        marker=dict(size=4, symbol='circle', opacity=0.8)  # Customized dots
     ))
 
-# Configure chart settings (white background, grid, better readability)
+# Configure chart settings
 fig.update_layout(
     title="Cryptocurrency Price Changes",
     xaxis_title="Date and Time",
@@ -56,22 +57,25 @@ fig.update_layout(
     xaxis=dict(
         tickformat='%Y-%m-%d %H:%M:%S',
         showgrid=True,
-        gridcolor="rgba(200, 200, 200, 0.3)",  # Light gray grid
-        tickangle=-45  # Better readability
+        gridcolor="rgba(150, 150, 150, 0.3)",  # Grid lines on X-axis
+        zeroline=True,  # Center line X
+        zerolinecolor="rgba(50, 50, 50, 0.5)"
     ),
     yaxis=dict(
         showgrid=True,
-        gridcolor="rgba(200, 200, 200, 0.3)"
+        gridcolor="rgba(150, 150, 150, 0.3)",  # Grid lines on Y-axis
+        zeroline=True,  # Center line Y
+        zerolinecolor="rgba(50, 50, 50, 0.5)"
     ),
     hovermode="closest",
-    plot_bgcolor="white",  # Белый фон
+    plot_bgcolor="white",
     paper_bgcolor="white",
     font=dict(
         family="Roboto, sans-serif",
         size=14,
         color="black"
     ),
-    margin=dict(l=40, r=40, t=50, b=50),  # Adequate spacing
+    margin=dict(l=40, r=40, t=50, b=50),
     width=1200,
     height=600
 )
