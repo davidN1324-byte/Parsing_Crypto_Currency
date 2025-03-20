@@ -65,6 +65,7 @@ section {
     margin: 0 auto;
 }
 
+/* Fix for chart container to prevent overflow */
 .chart-container {
     background-color: white;
     border-radius: 8px;
@@ -75,6 +76,7 @@ section {
     max-width: 1200px;
     margin: auto;
     overflow: hidden; /* Ensures that the chart doesn't overflow outside the container */
+    box-sizing: border-box; /* Prevents margin/padding issues */
 }
 
 /* Analysis section styles */
@@ -210,4 +212,10 @@ section {
     margin: 0 auto;
     border-radius: 8px;
     box-sizing: border-box; /* Prevents chart from overflowing */
+}
+
+/* Ensure chart container doesn't overflow on small screens */
+.chart-section {
+    width: 100%;
+    padding: 0 15px;
 }
