@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #3e8e41, #1d3b1a);
+    background: linear-gradient(135deg, #4caf50, #1d3b1a);
     color: white;
     font-size: 16px;
     line-height: 1.6;
@@ -17,9 +17,9 @@ body {
 .main-header {
     text-align: center;
     padding: 40px 20px;
-    background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
     margin-top: 20px;
     animation: fadeIn 2s ease-out;
 }
@@ -27,9 +27,9 @@ body {
 .title {
     font-size: 3rem;
     font-weight: 700;
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
-    animation: slideIn 1s ease-in-out;
+    animation: slideIn 1s ease-in-out, zoomIn 1.2s ease-out;
 }
 
 .subheading {
@@ -52,7 +52,7 @@ h2, .section-title {
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 2px;
-    animation: fadeIn 2s ease-out;
+    animation: fadeIn 2s ease-out, zoomIn 1s ease-out;
 }
 
 section {
@@ -64,18 +64,18 @@ section {
 }
 
 .chart-container {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 2s ease-out;
 }
 
 .analysis-section {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     animation: fadeInUp 3s ease-out;
 }
 
@@ -84,113 +84,70 @@ section {
     white-space: pre-wrap;
     word-wrap: break-word;
     line-height: 1.5;
-    overflow-wrap: break-word;  /* Break long words */
-    word-break: break-word;     /* Break words if necessary */
-    max-width: 100%;            /* Limit width */
-    overflow: auto;            /* Add scrolling if text is too much */
-    padding: 10px;             /* Add some padding for readability */
+    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow: auto;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
 }
 
-/* Styles for text with scrolling */
-#analysis-text {
-    white-space: pre-wrap;      /* Keeps spaces and line breaks */
-    word-wrap: break-word;      /* Word break */
-    overflow: auto;             /* Scrolling when overflowing */
-    max-height: 500px;          /* Limit height */
-    overflow-y: auto;           /* Vertical scrolling */
-    padding: 10px;
+/* Buttons */
+button {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
-/* Scrollbar styles for analysis */
-#analysis-text::-webkit-scrollbar {
-    width: 10px;  /* Vertical scrollbar width */
-    height: 10px; /* Horizontal scrollbar height */
-}
-
-/* Styles for the scrollbar thumb */
-#analysis-text::-webkit-scrollbar-thumb {
-    background-color: #4caf50;  /* Thumb color */
-    border-radius: 10px;        /* Rounded corners */
-    border: 2px solid #2e7d32;  /* Border around the thumb */
-}
-
-/* Styles for the scrollbar thumb on hover */
-#analysis-text::-webkit-scrollbar-thumb:hover {
-    background-color: #388e3c;  /* Thumb color on hover */
-}
-
-/* Styles for the scrollbar track background */
-#analysis-text::-webkit-scrollbar-track {
-    background-color: #333;     /* Scrollbar track background */
-    border-radius: 10px;
-}
-
-/* Styles for the scrollbar corner */
-#analysis-text::-webkit-scrollbar-corner {
-    background-color: transparent;
+button:hover {
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
 .main-footer {
     text-align: center;
     padding: 20px;
-    background-color: #2d3a3f;
+    background: #263238;
     color: white;
     font-size: 1rem;
     margin-top: 40px;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
 }
 
 /* **Animations** */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
 }
 
-/* We add responsiveness for mobile devices. */
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .title {
-        font-size: 2.5rem;
-    }
-
-    .main-header {
-        padding: 30px 15px;
-    }
-
-    main {
-        padding: 20px;
-    }
-
-    .chart-container, .analysis-section {
-        padding: 15px;
-    }
-
-    footer {
-        font-size: 0.875rem;
-    }
+    .title { font-size: 2.5rem; }
+    .main-header { padding: 30px 15px; }
+    main { padding: 20px; }
+    .chart-container, .analysis-section { padding: 15px; }
+    button { width: 100%; }
+    footer { font-size: 0.875rem; }
 }
