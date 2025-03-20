@@ -5,12 +5,12 @@ import os
 # Check for CSV file existence
 csv_filename = "cryptocurrencies_history.csv"
 if not os.path.exists(csv_filename):
-    print(f"Файл {csv_filename} не найден. График не будет построен.")
+    print(f"File {csv_filename} not found. The graph will not be built.")
     exit(1)
 
 # Check for empty file
 if os.stat(csv_filename).st_size == 0:
-    print(f"Файл {csv_filename} пуст. Нет данных для графика.")
+    print(f"File {csv_filename} empty. No data for the graph.")
     exit(1)
 
 # Read data from CSV
@@ -59,7 +59,10 @@ fig.update_layout(
         showgrid=True,
         gridcolor="rgba(150, 150, 150, 0.3)",  # Grid lines on X-axis
         zeroline=True,  # Center line X
-        zerolinecolor="rgba(50, 50, 50, 0.5)"
+        zerolinecolor="rgba(50, 50, 50, 0.5)",
+        type="date",  # Ensure the x-axis is treated as time
+        tickangle=-45,  # Rotate the ticks to prevent overlap
+        tickmode="auto",  # Automatically adjust tick marks based on data range
     ),
     yaxis=dict(
         showgrid=True,
@@ -75,7 +78,7 @@ fig.update_layout(
         size=14,
         color="black"
     ),
-    margin=dict(l=40, r=40, t=50, b=50),
+    margin=dict(l=40, r=40, t=50, b=80),  # Adjust bottom margin for better label spacing
     width=1200,
     height=600
 )
