@@ -11,6 +11,7 @@ body {
     color: white;
     font-size: 16px;
     line-height: 1.6;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 /* **Styles for headings** */
@@ -22,6 +23,8 @@ body {
     border-radius: 8px;
     margin-top: 20px;
     animation: fadeIn 2s ease-out;
+    width: 100%;
+    overflow: hidden;
 }
 
 .title {
@@ -43,6 +46,8 @@ body {
 /* **Main styles for content** */
 main {
     padding: 40px 20px;
+    width: 100%;
+    overflow: hidden;
 }
 
 h2, .section-title {
@@ -75,7 +80,7 @@ section {
     width: 100%;
     max-width: 1200px;
     margin: auto;
-    overflow: hidden; /* Ensures that the chart doesn't overflow outside the container */
+    overflow: hidden; /* Prevent overflow */
     box-sizing: border-box; /* Prevents margin/padding issues */
 }
 
@@ -87,6 +92,8 @@ section {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 3s ease-out;
     margin-top: 40px;
+    width: 100%;
+    overflow: hidden; /* Prevent overflow */
 }
 
 .analysis-content {
@@ -96,6 +103,8 @@ section {
     line-height: 1.5;
     overflow-wrap: break-word; /* Ensures text breaks properly to prevent overflow */
     max-width: 100%; /* Ensures no overflow from container */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Footer */
