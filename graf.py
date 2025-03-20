@@ -47,17 +47,33 @@ for coin in df_grouped['Abbreviation'].unique():
         line=dict(width=2)
     ))
 
-# Configure chart settings
+# Configure chart settings (white background, grid, better readability)
 fig.update_layout(
     title="Cryptocurrency Price Changes",
     xaxis_title="Date and Time",
     yaxis_title="Price ($)",
     legend_title="Cryptocurrency",
-    xaxis=dict(tickformat='%Y-%m-%d %H:%M:%S', showgrid=True),
-    yaxis=dict(showgrid=True),
+    xaxis=dict(
+        tickformat='%Y-%m-%d %H:%M:%S',
+        showgrid=True,
+        gridcolor="rgba(200, 200, 200, 0.3)",  # Light gray grid
+        tickangle=-45  # Better readability
+    ),
+    yaxis=dict(
+        showgrid=True,
+        gridcolor="rgba(200, 200, 200, 0.3)"
+    ),
     hovermode="closest",
-    plot_bgcolor="rgba(0,0,0,0)",  # Прозрачный фон
-    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="white",  # Белый фон
+    paper_bgcolor="white",
+    font=dict(
+        family="Roboto, sans-serif",
+        size=14,
+        color="black"
+    ),
+    margin=dict(l=40, r=40, t=50, b=50),  # Adequate spacing
+    width=1200,
+    height=600
 )
 
 # Save the chart as an HTML file
