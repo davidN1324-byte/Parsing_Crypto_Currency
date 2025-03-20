@@ -36,6 +36,7 @@ body {
     word-wrap: break-word; /* Ensure text wraps correctly */
     overflow-wrap: break-word; /* Wrap long words correctly */
     word-break: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Prevents text overflow */
 }
 
 .subheading {
@@ -47,6 +48,7 @@ body {
     word-wrap: break-word; /* Ensure text wraps correctly */
     overflow-wrap: break-word; /* Wrap long words correctly */
     word-break: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Prevents text overflow */
 }
 
 /* **Main styles for content** */
@@ -67,6 +69,7 @@ h2, .section-title {
     word-wrap: break-word; /* Ensure text wraps correctly */
     overflow-wrap: break-word; /* Wrap long words correctly */
     word-break: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Prevents text overflow */
 }
 
 section {
@@ -87,6 +90,7 @@ section {
     word-wrap: break-word; /* Ensure text wraps correctly */
     overflow-wrap: break-word; /* Wrap long words correctly */
     word-break: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Prevents text overflow */
 }
 
 .analysis-section {
@@ -108,7 +112,7 @@ section {
     word-break: break-word; /* Ensure text breaks at long words */
     line-height: 1.5;
     max-width: 100%;
-    overflow: auto;
+    overflow: hidden; /* Hide horizontal overflow */
     padding: 12px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
