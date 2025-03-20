@@ -33,8 +33,9 @@ body {
     text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
     animation: slideIn 1s ease-in-out, zoomIn 1.2s ease-out;
-    word-wrap: break-word; /* Ensures proper word wrapping */
-    overflow-wrap: break-word; /* Ensures long words break and wrap properly */
+    word-wrap: break-word; /* Ensure text wraps correctly */
+    overflow-wrap: break-word; /* Wrap long words correctly */
+    word-break: break-word; /* Break long words to prevent overflow */
 }
 
 .subheading {
@@ -43,8 +44,9 @@ body {
     font-size: 1.25rem;
     opacity: 0.8;
     animation: fadeIn 3s ease-out;
-    word-wrap: break-word; /* Ensures proper word wrapping */
-    overflow-wrap: break-word; /* Ensures long words break and wrap properly */
+    word-wrap: break-word; /* Ensure text wraps correctly */
+    overflow-wrap: break-word; /* Wrap long words correctly */
+    word-break: break-word; /* Break long words to prevent overflow */
 }
 
 /* **Main styles for content** */
@@ -62,8 +64,9 @@ h2, .section-title {
     font-weight: 600;
     letter-spacing: 2px;
     animation: fadeIn 2s ease-out, zoomIn 1s ease-out;
-    word-wrap: break-word; /* Ensures proper word wrapping */
-    overflow-wrap: break-word; /* Ensures long words break and wrap properly */
+    word-wrap: break-word; /* Ensure text wraps correctly */
+    overflow-wrap: break-word; /* Wrap long words correctly */
+    word-break: break-word; /* Break long words to prevent overflow */
 }
 
 section {
@@ -81,8 +84,9 @@ section {
     padding: 25px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 2s ease-out;
-    word-wrap: break-word; /* Ensures proper word wrapping */
-    overflow-wrap: break-word; /* Ensures long words break and wrap properly */
+    word-wrap: break-word; /* Ensure text wraps correctly */
+    overflow-wrap: break-word; /* Wrap long words correctly */
+    word-break: break-word; /* Break long words to prevent overflow */
 }
 
 .analysis-section {
@@ -103,12 +107,12 @@ section {
     overflow-wrap: break-word; /* Additional support for wrapping */
     word-break: break-word; /* Ensure text breaks at long words */
     line-height: 1.5;
-    overflow-wrap: break-word;
     max-width: 100%;
     overflow: auto;
     padding: 12px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
+    display: block; /* Ensures content does not overflow */
 }
 
 /* Buttons */
