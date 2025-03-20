@@ -61,6 +61,8 @@ section {
 
 .chart-section {
     text-align: center;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .chart-container {
@@ -72,6 +74,7 @@ section {
     width: 100%;
     max-width: 1200px;
     margin: auto;
+    overflow: hidden; /* Ensures that the chart doesn't overflow outside the container */
 }
 
 /* Analysis section styles */
@@ -196,12 +199,15 @@ section {
     width: 100%;
     height: 600px;
     border-radius: 8px;
+    box-sizing: border-box; /* Prevents iframe from overflowing */
 }
 
 /* Custom styles for the interactive chart */
 .chart-section .plotly-graph-div {
-    max-width: 100%;
+    width: 100%;
     height: 100%;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
+    box-sizing: border-box; /* Prevents chart from overflowing */
 }
