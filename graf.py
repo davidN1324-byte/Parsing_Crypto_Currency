@@ -1,20 +1,29 @@
 import pandas as pd
 import plotly.graph_objects as go
-import os
 
-# Reading data from CSV
+# Read data from CSV
 df = pd.read_csv("cryptocurrencies_history.csv")
 
-# We will convert the date column to the `datetime` format.
-df['Date and Time'] = pd.to_datetime(df['Date and Time'])
+# Ensure that the first row is not a duplicated header
+if df.iloc[0, 0] == "Date and Time":
+    df = df.iloc[1:].reset_index(drop=True)
 
-# We group by date and cryptocurrency.
+# Convert 'Date and Time' column to datetime format
+df['Date and Time'] = pd.to_datetime(df['Date and Time'], format="%Y-%m-%d %H:%M:%S", errors="coerce")
+
+# Remove rows where 'Date and Time' could not be converted
+df = df.dropna(subset=['Date and Time'])
+
+# Group by date and cryptocurrency, keeping the last recorded price
 df_grouped = df[['Date and Time', 'Abbreviation', 'Price ($)']].groupby(['Date and Time', 'Abbreviation']).last().reset_index()
 
-# We create an interactive chart.
+# Sort by date in descending order (latest prices first)
+df_grouped = df_grouped.sort_values(by="Date and Time", ascending=False)
+
+# Create an interactive chart
 fig = go.Figure()
 
-# We add a line for each cryptocurrency.
+# Add a line for each cryptocurrency
 for coin in df_grouped['Abbreviation'].unique():
     coin_data = df_grouped[df_grouped['Abbreviation'] == coin]
     fig.add_trace(go.Scatter(
@@ -22,18 +31,18 @@ for coin in df_grouped['Abbreviation'].unique():
         y=coin_data['Price ($)'],
         mode='lines',
         name=coin,
-        hoverinfo='x+y+name',  # It displays information on hover.
+        hoverinfo='x+y+name',
         line=dict(width=2)
     ))
 
-# Chart settings.
+# Configure chart settings
 fig.update_layout(
     title="Cryptocurrency Price Changes",
     xaxis_title="Date and Time",
     yaxis_title="Price ($)",
-    legend_title="Crypto",
+    legend_title="Cryptocurrency",
     xaxis=dict(tickformat='%Y-%m-%d %H:%M:%S'),
-    hovermode="closest"  # Interactive mode.
+    hovermode="closest"
 )
 
 # Save the chart as an HTML file
