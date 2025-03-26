@@ -1,15 +1,16 @@
-Looking at the provided data, we can make a few conclusions and give some potential trading recommendations:
+Based on the provided data, we can observe that:
 
-- Cryptocurrencies BCH, BTC, and SOL have the highest moving averages, hence they seem to be in an overall uptrend, suggesting they could be good long-term investments.
-- BNB and SOL have the highest volatility among all of the coins, indicating that these coins might have a higher potential for profit, but remember that it also means higher risk.
-- Regarding correlation, it appears that ETH, STETH, and WSTETH are highly correlated, suggesting that their prices move together. If you're trying to diversify your portfolio to limit exposure to any one sector, you might not want to hold all of these coins at once.
-   
-Summary of recommendations:
+1. The 'btc' (Bitcoin) has the highest moving average, followed by 'wbtc' (Wrapped Bitcoin) and 'bnb' (Binance Coin). This indicates these cryptocurrencies have been performing well recently.
 
-1. Consider investing in BCH, BTC, and SOL for long term as they show a positive upward trend.
+2. Cryptocurrencies 'sol' (Solana) and 'bnb' (Binance Coin) show high volatility, which can be advantageous for day traders who can benefit from price fluctuations.
 
-2. BNB and SOL show high volatility, so they could be good for short-term trading or for those who can tolerate risk.
+3. The pair 'btc' and 'wbtc' shows a strong positive correlation of 0.9986539633304587 which indicates that they tend to move in the same direction. This knowledge can be used to construct a diversified portfolio that can potentially lead to higher returns.
 
-3. ETH, STETH, and WSTETH are highly correlated, meaning that investing in these simultaneously won't add diversification to your portfolio.
-   
-Remember that these are just recommendations based on the data provided, and each investor should conduct their own research or consult with a financial adviser before making investment decisions. Additionally, investing in cryptocurrencies can be risky, and one should only invest what they can afford to lose.
+4. Cryptocurrencies 'ctb' (Cortex) and 'wrsol' (Wrapped Solana) show zero values on multiple indicators, suggesting there is a lack of active trading for these cryptocurrencies.
+
+Therefore, potential trading recommendations could be:
+
+- Active traders might want to take advantage of the high volatility in 'sol' and 'bnb'.
+- Long-term investors seeking steady returns may look into investing in cryptocurrencies with high moving averages like 'btc', 'wbtc' and 'bnb'.
+- To offset potential risk, constructing a portfolio consisting of both 'btc' and 'wbtc' could be beneficial due to their strong positive correlation.
+- It might be wise to avoid 'ctb' and 'wrsol' due to a lack of active trading.
