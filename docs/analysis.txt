@@ -1,15 +1,15 @@
-Based on the provided data, the following recommendations can be made:
+Based on the given data, here are some short term trading recommendation:
 
-1. Trade between BCH and SOL: These two cryptocurrencies have a high correlation of 0.875, and as SOL shows a growing trend (mean change in closing price per day) of 6.72 and BCH shows a decreasing trend of -4.46, one could potentially sell BCH to buy SOL.
+1. Bitcoin (BTC): The crypto with the highest moving average and a positive trend, thus it promises relatively secure trades. It also has the most connections with other coins, meaning it moves with the market trends and not separately.
 
-2. Trade between BNB and BTC: These digital currencies also have a strong correlation (0.750). Considering the upward trend of BNB (8.02) and BTC (4.77), it may be wise to split investments between both currencies to benefit from their growth.
+2. Binance Coin (BNB): It has a healthy positive trend and a high correlation with BTC. Investing in BNB might be profitable if BTC is predicted to grow in the future.
 
-3. Contrary to BCH, ETH, and LTC which have downward trends, BTC, BNB, and SOL have upward trends. Therefore, it might be a good choice to sell BCH, ETH, and LTC and buy BTC, BNB, and SOL.
+3. Solana (SOL): A favorable positive trend and a healthy moving average. Also, this has a strong positive correlation with BCH, meaning they're likely to move together. 
 
-4. The cryptocurrencies CTB, UGOLD and WRSOL have a zero volatility and zero trend and therefore, it's not recommended to invest in these due to their lack of activity.
+4. Ethereum (ETH): Despite a negative trend, it's moving average is considerably high and has strong correlations with multiple other coins.
 
-5. ETH and STETH have very high positive correlation (0.999), and they have very similar trends and moving averages. This indicates that their prices move almost identically and one can be used as a hedge against the other.
+Avoid trading highly volatile coins like BCH and ETH without carefully assessing the risk. The coin CTB has the lowest volatility but it lacks any correlation with other coins which makes it unpredictable.
 
-6. BTC and WBTC have very similar statistics over the indicated period. They have almost identical volatility and trend. Their correlation is also very strong (almost 1). This again suggests that these assets move identically over time, and positions could be hedged on one with the other.
+Also, UGOLD, WRSOL seem to not be moving at all considering the 0 volatility and 0 trend. The same goes for CTB. Unless you have a specific strategy for such coins, it might be better to stick with the active coins for now.
 
-Remember, these recommendations are based on historical data and should not be considered as definite forecast for future price movements. Always perform your own analysis and consider your risk tolerance before making investment decisions.
+Remember, all investments have risk and you should be comfortable with the level of risk before engaging in any trading activity. These suggestions depend on the status at the current time and could change significantly in no time.
